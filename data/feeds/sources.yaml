@@ -1,0 +1,168 @@
+# sources.yaml — list of RSS feeds to collect from
+# Format: each entry has name, url, language, section, notes
+#
+# STATUS KEY:
+#   verified   = tested from our network and working
+#   unverified = found in reference but NOT tested yet
+#   blocked    = tested and blocked from cloud/campus; try home network
+#   skip       = no RSS feed available
+
+sources:
+
+  # ── SINHALA — Working (from sinhala-news-corpus project) ──────────
+  - name: "Lankadeepa"
+    url: "https://www.lankadeepa.lk/rss"
+    language: "si"
+    section: "business"
+    status: "unverified"       # re-test from our network
+    notes: "Collected successfully by reference project"
+
+  - name: "Neth News"
+    url: "https://www.nethfm.lk/rss"
+    language: "si"
+    section: "general"
+    status: "unverified"
+    notes: "Collected by reference project"
+
+  - name: "Siyatha News"
+    url: "https://siyathanews.lk/feed/"
+    language: "si"
+    section: "general"
+    status: "unverified"
+    notes: "BIAS: many China-related stories — note this in evaluation"
+
+  - name: "Lanka Truth"
+    url: "https://www.lankatruth.com/feed/"
+    language: "si"
+    section: "general"
+    status: "unverified"
+    notes: "BIAS: politically partisan — weight accordingly"
+
+  - name: "Lanka C News"
+    url: "https://www.lankanewsweb.net/feed"
+    language: "si"
+    section: "general"
+    status: "unverified"
+    notes: "Tabloid-style — lower credibility weight"
+
+  # ── SINHALA — Need to test from home/campus network ───────────────
+  - name: "Ada Derana Sinhala"
+    url: "https://sinhala.adaderana.lk/rss.php"
+    language: "si"
+    section: "business"
+    status: "blocked"          # blocked from cloud; test from home network
+    notes: "High-quality source if accessible"
+
+  - name: "Dinamina"
+    url: "https://www.dinamina.lk/rss"
+    language: "si"
+    section: "business"
+    status: "blocked"
+    notes: ""
+
+  - name: "Divaina"
+    url: "https://www.divaina.com/rss"
+    language: "si"
+    section: "business"
+    status: "blocked"
+    notes: "May use legacy Sinhala font encoding — check and skip if so"
+
+  - name: "Ada (ada.lk)"
+    url: "https://www.ada.lk/rss"
+    language: "si"
+    section: "general"
+    status: "blocked"
+    notes: "Was returning access-denied on 14 Oct 2026 — re-test"
+
+  - name: "Newsfirst Sinhala"
+    url: "https://sinhala.newsfirst.lk/feed"
+    language: "si"
+    section: "general"
+    status: "blocked"
+    notes: ""
+
+  - name: "Mawbima"
+    url: "https://www.mawbima.lk/rss"
+    language: "si"
+    section: "business"
+    status: "blocked"
+    notes: ""
+
+  # ── TAMIL — All unverified, need to find and test URLs ────────────
+  - name: "Virakesari"
+    url: ""                    # FIND THE CORRECT RSS URL
+    language: "ta"
+    section: "business"
+    status: "unverified"
+    notes: "Listed in feed registry — find working URL first"
+
+  - name: "Thinakaran"
+    url: ""
+    language: "ta"
+    section: "business"
+    status: "unverified"
+    notes: "Find and test URL"
+
+  - name: "Thinakkural"
+    url: ""
+    language: "ta"
+    section: "general"
+    status: "unverified"
+    notes: "Find and test URL"
+
+  - name: "Uthayan"
+    url: ""
+    language: "ta"
+    section: "general"
+    status: "unverified"
+    notes: "Find and test URL"
+
+  - name: "Tamil Guardian"
+    url: "https://www.tamilguardian.com/rss.xml"
+    language: "ta"
+    section: "general"
+    status: "unverified"
+    notes: "International focus; verify Sri Lanka coverage"
+
+  - name: "Tamil Mirror"
+    url: ""
+    language: "ta"
+    section: "business"
+    status: "unverified"
+    notes: "Appears in open news dataset — find feed URL"
+
+  # ── ENGLISH — Business / Economy ──────────────────────────────────
+  - name: "EconomyNext"
+    url: "https://economynext.com/feed/"
+    language: "en"
+    section: "economy"
+    status: "unverified"
+    notes: "Best English source for business facts"
+
+  - name: "Lanka Business Online"
+    url: "https://www.lankabusinessonline.com/feed/"
+    language: "en"
+    section: "business"
+    status: "unverified"
+    notes: ""
+
+  - name: "Daily FT"
+    url: "https://www.ft.lk/rss"
+    language: "en"
+    section: "business"
+    status: "unverified"
+    notes: ""
+
+  - name: "Daily Mirror"
+    url: "https://www.dailymirror.lk/rss"
+    language: "en"
+    section: "business"
+    status: "unverified"
+    notes: "Check which section RSS is available for"
+
+  - name: "Ada Derana English"
+    url: "https://www.adaderana.lk/rss.php"
+    language: "en"
+    section: "general"
+    status: "unverified"
+    notes: "Good for cross-checking Sinhala items"

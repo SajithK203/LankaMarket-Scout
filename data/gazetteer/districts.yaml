@@ -1,0 +1,163 @@
+# gazetteer.yaml — District and place-name lookup table
+# ─────────────────────────────────────────────────────────────────────────────
+# The LLM outputs district names in English. We need to map all possible
+# spellings (English, Sinhala, Tamil, common variants) to one canonical
+# English name so database queries are consistent.
+#
+# OWNER: Member C to maintain. Native speakers to add variant spellings.
+# ─────────────────────────────────────────────────────────────────────────────
+
+districts:
+
+  - canonical: "Ampara"
+    sinhala: ["අම්පාර"]
+    tamil: ["அம்பாறை"]
+    variants: ["Ampara", "Amparai"]
+    region: "Eastern"
+
+  - canonical: "Anuradhapura"
+    sinhala: ["අනුරාධපුරය"]
+    tamil: ["அனுராதபுரம்"]
+    variants: ["Anuradhapura", "Anuradhapuram"]
+    region: "North Central"
+    prototype: true   # included in prototype scope
+
+  - canonical: "Badulla"
+    sinhala: ["බදුල්ල"]
+    tamil: ["பதுல்லை"]
+    variants: ["Badulla"]
+    region: "Uva"
+
+  - canonical: "Batticaloa"
+    sinhala: ["මඩකලපුව"]
+    tamil: ["மட்டக்களப்பு"]
+    variants: ["Batticaloa", "Batticaloa District"]
+    region: "Eastern"
+
+  - canonical: "Colombo"
+    sinhala: ["කොළඹ"]
+    tamil: ["கொழும்பு"]
+    variants: ["Colombo", "CMC"]
+    region: "Western"
+
+  - canonical: "Galle"
+    sinhala: ["ගාල්ල"]
+    tamil: ["காலி"]
+    variants: ["Galle", "Galla"]
+    region: "Southern"
+    prototype: true
+
+  - canonical: "Gampaha"
+    sinhala: ["ගම්පහ"]
+    tamil: ["கம்பஹா"]
+    variants: ["Gampaha"]
+    region: "Western"
+
+  - canonical: "Hambantota"
+    sinhala: ["හම්බන්තොට"]
+    tamil: ["அம்பாந்தோட்டை"]
+    variants: ["Hambantota"]
+    region: "Southern"
+
+  - canonical: "Jaffna"
+    sinhala: ["යාපනය"]
+    tamil: ["யாழ்ப்பாணம்"]
+    variants: ["Jaffna", "Yaalpaanam"]
+    region: "Northern"
+
+  - canonical: "Kalutara"
+    sinhala: ["කළුතර"]
+    tamil: ["களுத்துறை"]
+    variants: ["Kalutara"]
+    region: "Western"
+
+  - canonical: "Kandy"
+    sinhala: ["මහනුවර", "කන්ද"]
+    tamil: ["கண்டி", "மலையகம்"]
+    variants: ["Kandy", "Mahanuwara", "Maha Nuwara"]
+    region: "Central"
+    prototype: true   # included in prototype scope
+
+  - canonical: "Kegalle"
+    sinhala: ["කෑගල්ල"]
+    tamil: ["கேகாலை"]
+    variants: ["Kegalle", "Kegalla"]
+    region: "Sabaragamuwa"
+
+  - canonical: "Kilinochchi"
+    sinhala: ["කිලිනොච්චි"]
+    tamil: ["கிளிநொச்சி"]
+    variants: ["Kilinochchi"]
+    region: "Northern"
+
+  - canonical: "Kurunegala"
+    sinhala: ["කුරුණෑගල"]
+    tamil: ["குருணாகல்"]
+    variants: ["Kurunegala"]
+    region: "North Western"
+
+  - canonical: "Mannar"
+    sinhala: ["මන්නාරම"]
+    tamil: ["மன்னார்"]
+    variants: ["Mannar"]
+    region: "Northern"
+
+  - canonical: "Matale"
+    sinhala: ["මාතලේ"]
+    tamil: ["மாத்தளை"]
+    variants: ["Matale"]
+    region: "Central"
+
+  - canonical: "Matara"
+    sinhala: ["මාතර"]
+    tamil: ["மாத்தறை"]
+    variants: ["Matara"]
+    region: "Southern"
+
+  - canonical: "Monaragala"
+    sinhala: ["මොනරාගල"]
+    tamil: ["மொணராகலை"]
+    variants: ["Monaragala"]
+    region: "Uva"
+
+  - canonical: "Mullaitivu"
+    sinhala: ["මුලතිව්"]
+    tamil: ["முல்லைத்தீவு"]
+    variants: ["Mullaitivu", "Mullativu"]
+    region: "Northern"
+
+  - canonical: "Nuwara Eliya"
+    sinhala: ["නුවරඑළිය"]
+    tamil: ["நுவரெலியா"]
+    variants: ["Nuwara Eliya", "Nuwaraeliya", "Hill Country"]
+    region: "Central"
+
+  - canonical: "Polonnaruwa"
+    sinhala: ["පොළොන්නරුව"]
+    tamil: ["பொலோன்னறுவை"]
+    variants: ["Polonnaruwa", "Polonnaruwa District"]
+    region: "North Central"
+
+  - canonical: "Puttalam"
+    sinhala: ["පුත්තලම"]
+    tamil: ["புத்தளம்"]
+    variants: ["Puttalam", "Puttlam"]
+    region: "North Western"
+
+  - canonical: "Ratnapura"
+    sinhala: ["රත්නපුර"]
+    tamil: ["இரத்தினபுரி"]
+    variants: ["Ratnapura"]
+    region: "Sabaragamuwa"
+
+  - canonical: "Trincomalee"
+    sinhala: ["ත්‍රිකුණාමලය"]
+    tamil: ["திருகோணமலை"]
+    variants: ["Trincomalee", "Trinco"]
+    region: "Eastern"
+
+  - canonical: "Vavuniya"
+    sinhala: ["වව්නියාව"]
+    tamil: ["வவுனியா"]
+    variants: ["Vavuniya"]
+    region: "Northern"

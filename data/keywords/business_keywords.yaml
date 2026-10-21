@@ -1,0 +1,123 @@
+# Business Keywords — Three Languages
+# ─────────────────────────────────────────────────────────────────────────────
+# Stage 4 of the pipeline: before paying for LLM extraction, check each
+# headline for at least one keyword from this list. Items with no match
+# are dropped (they are almost certainly not business-relevant).
+#
+# HOW TO EDIT THIS FILE:
+#   - Add words in their base form where possible.
+#   - For Sinhala and Tamil, Sinhala/Tamil speakers MUST verify and extend
+#     this list — words change form a lot (inflection).
+#   - One word/phrase per line. Comments start with #.
+#   - Keep this file in Git so everyone's edits are shared.
+#
+# OWNER: Member C (initial list) + native speaker team members (review)
+# ─────────────────────────────────────────────────────────────────────────────
+
+english:
+  # Prices and costs
+  - price
+  - cost
+  - inflation
+  - fuel
+  - electricity
+  - tariff
+  - subsidy
+  - tax
+  - VAT
+  # Trade and finance
+  - import
+  - export
+  - exchange rate
+  - rupee
+  - interest rate
+  - loan
+  - bank
+  - credit
+  # Business events
+  - strike
+  - shortage
+  - supply
+  - demand
+  - market
+  - investment
+  # Sectors
+  - agriculture
+  - farming
+  - harvest
+  - tourism
+  - hotel
+  - restaurant
+  - retail
+  - construction
+  - transport
+  - logistics
+  # Infrastructure
+  - road
+  - highway
+  - port
+  - electricity cut
+  - power cut
+  # Disasters / weather
+  - flood
+  - drought
+  - cyclone
+  - landslide
+  # Regulations
+  - regulation
+  - license
+  - permit
+  - ban
+  - policy
+
+sinhala:
+  # NOTE: A Sinhala-fluent team member must verify and extend this list.
+  # These are base forms — Sinhala words inflect heavily.
+  - මිල          # price
+  - ගාස්තු        # charges / tariff
+  - ඉන්ධන        # fuel
+  - විදුලිය       # electricity
+  - බදු           # tax
+  - ආනයන         # import
+  - අපනයන        # export
+  - රුපියල        # rupee
+  - ගොවිතැන      # farming / agriculture
+  - සංචාරක       # tourism / tourist
+  - ආයෝජන       # investment
+  - ව්‍යාපාර      # business / enterprise
+  - ණය           # loan / debt
+  - ගංවතුර       # flood
+  - නියඟය        # drought
+  - වෙළෙඳ        # trade / market
+  - ඉදිකිරීම     # construction
+  - ලිට්රය        # litre (fuel price context)
+  - ගාල          # price hike
+  - සැලැස්ම      # scheme / plan
+  - ඉල්ලූම       # demand
+  - සැපයුම       # supply
+  - මහ බැංකුව   # central bank
+  - ෆාම්          # farm
+  - හෝටල        # hotel
+
+tamil:
+  # NOTE: A Tamil-fluent team member must verify and extend this list.
+  - விலை          # price
+  - எரிபொருள்     # fuel
+  - மின்சாரம்     # electricity
+  - வரி           # tax
+  - இறக்குமதி     # import
+  - ஏற்றுமதி      # export
+  - ரூபாய்        # rupee
+  - வேளாண்மை     # agriculture
+  - விவசாயம்     # farming
+  - சுற்றுலா      # tourism
+  - முதலீடு       # investment
+  - வணிகம்       # business / trade
+  - கடன்          # loan
+  - வெள்ளம்      # flood
+  - வறட்சி        # drought
+  - சந்தை         # market
+  - கட்டுமானம்   # construction
+  - விநியோகம்    # supply
+  - தேவை          # demand
+  - வங்கி         # bank

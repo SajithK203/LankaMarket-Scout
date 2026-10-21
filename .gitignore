@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Environment / secrets — NEVER commit these
+.env
+config/settings.yaml
+*.key
+
+# Database files (can be large)
+*.db
+*.sqlite
+*.sqlite3
+data/chroma/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log

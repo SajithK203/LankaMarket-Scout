@@ -1,0 +1,43 @@
+# ── LLM Settings ──────────────────────────────────────────────────
+llm:
+  provider: "gemini"           # "gemini" | "openai" — test both on Sinhala/Tamil
+  model: "gemini-1.5-flash"    # cheap, fast, good multilingual
+  api_key: "YOUR_API_KEY_HERE" # REPLACE THIS — never commit real keys
+  max_tokens: 512
+  temperature: 0.1             # low = consistent structured output
+
+# ── Embedding Model ───────────────────────────────────────────────
+embeddings:
+  model: "intfloat/multilingual-e5-small"  # fits on CPU; swap to BGE-M3 for better quality
+
+# ── Collector Settings ─────────────────────────────────────────────
+collector:
+  interval_minutes: 20         # how often to poll feeds
+  request_delay_seconds: 3     # polite pause between requests to same site
+  max_retries: 3
+  user_agent: "LankaMarketScout/0.1 (research prototype; contact: YOUR_EMAIL)"
+
+# ── Prototype Scope ────────────────────────────────────────────────
+scope:
+  districts:                   # expand later; start small
+    - "Kandy"
+    - "Anuradhapura"
+    - "Galle"
+  sectors:                     # expand later; start small
+    - "agriculture"
+    - "food_retail"
+
+# ── Agent Loop Settings ────────────────────────────────────────────
+agent:
+  max_steps: 6                 # hard cap — prevents infinite loops and cost blowout
+  lookback_days: 90            # how far back to search news
+
+# ── Storage Paths ─────────────────────────────────────────────────
+storage:
+  sqlite_path: "data/lankamarket.db"
+  chroma_path: "data/chroma"
+
+# ── Logging ───────────────────────────────────────────────────────
+logging:
+  level: "INFO"                # DEBUG | INFO | WARNING
+  file: "logs/collector.log"
