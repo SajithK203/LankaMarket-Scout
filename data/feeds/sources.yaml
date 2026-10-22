@@ -1,168 +1,204 @@
 # sources.yaml — list of RSS feeds to collect from
-# Format: each entry has name, url, language, section, notes
+# Format: each entry has name, url, language, section, status, notes
 #
 # STATUS KEY:
-#   verified   = tested from our network and working
-#   unverified = found in reference but NOT tested yet
-#   blocked    = tested and blocked from cloud/campus; try home network
-#   skip       = no RSS feed available
+#   verified   = tested from our network, returns items  ✅
+#   empty      = feed responds HTTP 200 but returned 0 items (investigate URL)
+#   blocked    = tested, returns 403/401 — not accessible from this network
+#   dead       = tested, returns 404 — URL no longer exists
+#   no_url     = RSS URL not yet found; search manually
+#   skip       = deliberately excluded from collection
+#
+# TESTED: 2026-10-22 from campus/home network
+# Result: 13/22 responding | 7 with items | 6 empty | 4 blocked/dead | 5 no URL
 
 sources:
 
-  # ── SINHALA — Working (from sinhala-news-corpus project) ──────────
-  - name: "Lankadeepa"
-    url: "https://www.lankadeepa.lk/rss"
-    language: "si"
-    section: "business"
-    status: "unverified"       # re-test from our network
-    notes: "Collected successfully by reference project"
+  # ════════════════════════════════════════════════════════════════════
+  # SINHALA — Verified working (returning items)
+  # ════════════════════════════════════════════════════════════════════
 
-  - name: "Neth News"
-    url: "https://www.nethfm.lk/rss"
-    language: "si"
-    section: "general"
-    status: "unverified"
-    notes: "Collected by reference project"
-
-  - name: "Siyatha News"
-    url: "https://siyathanews.lk/feed/"
-    language: "si"
-    section: "general"
-    status: "unverified"
-    notes: "BIAS: many China-related stories — note this in evaluation"
-
-  - name: "Lanka Truth"
-    url: "https://www.lankatruth.com/feed/"
-    language: "si"
-    section: "general"
-    status: "unverified"
-    notes: "BIAS: politically partisan — weight accordingly"
-
-  - name: "Lanka C News"
-    url: "https://www.lankanewsweb.net/feed"
-    language: "si"
-    section: "general"
-    status: "unverified"
-    notes: "Tabloid-style — lower credibility weight"
-
-  # ── SINHALA — Need to test from home/campus network ───────────────
   - name: "Ada Derana Sinhala"
     url: "https://sinhala.adaderana.lk/rss.php"
     language: "si"
-    section: "business"
-    status: "blocked"          # blocked from cloud; test from home network
-    notes: "High-quality source if accessible"
+    section: "general"
+    status: "verified"        # ✅ 2026-10-22 — 25 items
+    notes: "High-quality, high-volume source. Was thought cloud-blocked but works from our network."
 
   - name: "Dinamina"
     url: "https://www.dinamina.lk/rss"
     language: "si"
     section: "business"
-    status: "blocked"
-    notes: ""
-
-  - name: "Divaina"
-    url: "https://www.divaina.com/rss"
-    language: "si"
-    section: "business"
-    status: "blocked"
-    notes: "May use legacy Sinhala font encoding — check and skip if so"
-
-  - name: "Ada (ada.lk)"
-    url: "https://www.ada.lk/rss"
-    language: "si"
-    section: "general"
-    status: "blocked"
-    notes: "Was returning access-denied on 14 Oct 2026 — re-test"
-
-  - name: "Newsfirst Sinhala"
-    url: "https://sinhala.newsfirst.lk/feed"
-    language: "si"
-    section: "general"
-    status: "blocked"
-    notes: ""
+    status: "verified"        # ✅ 2026-10-22 — 10 items
+    notes: "Good quality Sinhala source. Was thought blocked but works from our network."
 
   - name: "Mawbima"
     url: "https://www.mawbima.lk/rss"
     language: "si"
     section: "business"
-    status: "blocked"
-    notes: ""
+    status: "verified"        # ✅ 2026-10-22 — 10 items
+    notes: "Was thought blocked but works from our network."
 
-  # ── TAMIL — All unverified, need to find and test URLs ────────────
-  - name: "Virakesari"
-    url: ""                    # FIND THE CORRECT RSS URL
-    language: "ta"
-    section: "business"
-    status: "unverified"
-    notes: "Listed in feed registry — find working URL first"
-
-  - name: "Thinakaran"
-    url: ""
-    language: "ta"
-    section: "business"
-    status: "unverified"
-    notes: "Find and test URL"
-
-  - name: "Thinakkural"
-    url: ""
-    language: "ta"
+  - name: "Lanka C News"
+    url: "https://www.lankanewsweb.net/feed"
+    language: "si"
     section: "general"
-    status: "unverified"
-    notes: "Find and test URL"
+    status: "verified"        # ✅ 2026-10-22 — 10 items
+    notes: "Tabloid-style — lower credibility weight. Still useful for coverage breadth."
 
-  - name: "Uthayan"
-    url: ""
-    language: "ta"
+  # ════════════════════════════════════════════════════════════════════
+  # SINHALA — Feed responds HTTP 200 but returned 0 items
+  # Action: open each URL in a browser and try alternate URL patterns.
+  # ════════════════════════════════════════════════════════════════════
+
+  - name: "Lankadeepa"
+    url: "https://www.lankadeepa.lk/rss"
+    language: "si"
+    section: "business"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
+    notes: "Try https://www.lankadeepa.lk/rss/business or /rss/economy — current URL returns empty feed."
+
+  - name: "Siyatha News"
+    url: "https://siyathanews.lk/feed/"
+    language: "si"
     section: "general"
-    status: "unverified"
-    notes: "Find and test URL"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
+    notes: "BIAS: many China-related stories. Try /?feed=rss2 or /rss"
+
+  - name: "Divaina"
+    url: "https://www.divaina.com/rss"
+    language: "si"
+    section: "business"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
+    notes: "May use legacy Sinhala font encoding — check items manually. Try /feed/"
+
+  - name: "Ada (ada.lk)"
+    url: "https://www.ada.lk/rss"
+    language: "si"
+    section: "general"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items (was 403 in Oct)
+    notes: "Try https://www.ada.lk/feed or /rss.xml"
+
+  # ════════════════════════════════════════════════════════════════════
+  # SINHALA — Blocked or dead
+  # ════════════════════════════════════════════════════════════════════
+
+  - name: "Newsfirst Sinhala"
+    url: "https://sinhala.newsfirst.lk/feed"
+    language: "si"
+    section: "general"
+    status: "blocked"         # ❌ 2026-10-22 — HTTP 403
+    notes: "Blocked from this network. Try mobile hotspot. Also try /rss or /rss.xml"
+
+  - name: "Lanka Truth"
+    url: "https://www.lankatruth.com/feed/"
+    language: "si"
+    section: "general"
+    status: "blocked"         # ❌ 2026-10-22 — HTTP 401 (requires authentication)
+    notes: "BIAS: politically partisan. Requires login — skip for now."
+
+  - name: "Neth News"
+    url: "https://www.nethfm.lk/rss"
+    language: "si"
+    section: "general"
+    status: "dead"            # ❌ 2026-10-22 — HTTP 404
+    notes: "Feed URL no longer exists. Skip unless a new URL is found."
+
+  # ════════════════════════════════════════════════════════════════════
+  # TAMIL — Verified working
+  # ════════════════════════════════════════════════════════════════════
 
   - name: "Tamil Guardian"
     url: "https://www.tamilguardian.com/rss.xml"
     language: "ta"
     section: "general"
-    status: "unverified"
-    notes: "International focus; verify Sri Lanka coverage"
+    status: "verified"        # ✅ 2026-10-22 — 9 items
+    notes: "International/diaspora focus. Verify that items are Sri Lanka-relevant before using."
 
-  - name: "Tamil Mirror"
-    url: ""
+  # ════════════════════════════════════════════════════════════════════
+  # TAMIL — URLs still needed (HIGH PRIORITY — needed for +10 bonus points)
+  # To find: open browser, go to the site, look for an RSS icon or
+  # try appending /rss /feed /rss.xml to the domain.
+  # ════════════════════════════════════════════════════════════════════
+
+  - name: "Virakesari"
+    url: ""                   # TODO: try https://www.virakesari.lk/rss or /feed
     language: "ta"
     section: "business"
-    status: "unverified"
-    notes: "Appears in open news dataset — find feed URL"
+    status: "no_url"
+    notes: "Major Sri Lankan Tamil daily. HIGH PRIORITY — finding this URL earns the Tamil bonus."
 
-  # ── ENGLISH — Business / Economy ──────────────────────────────────
-  - name: "EconomyNext"
-    url: "https://economynext.com/feed/"
-    language: "en"
-    section: "economy"
-    status: "unverified"
-    notes: "Best English source for business facts"
-
-  - name: "Lanka Business Online"
-    url: "https://www.lankabusinessonline.com/feed/"
-    language: "en"
+  - name: "Tamil Mirror"
+    url: ""                   # TODO: try https://www.tamilmirror.lk/feed or /rss
+    language: "ta"
     section: "business"
-    status: "unverified"
-    notes: ""
+    status: "no_url"
+    notes: "Sri Lanka-focused Tamil outlet. Important for local Tamil coverage."
 
-  - name: "Daily FT"
-    url: "https://www.ft.lk/rss"
-    language: "en"
+  - name: "Thinakaran"
+    url: ""                   # TODO: try https://www.thinakaran.lk/rss or /feed
+    language: "ta"
     section: "business"
-    status: "unverified"
-    notes: ""
+    status: "no_url"
+    notes: "Find and test URL."
 
-  - name: "Daily Mirror"
-    url: "https://www.dailymirror.lk/rss"
-    language: "en"
-    section: "business"
-    status: "unverified"
-    notes: "Check which section RSS is available for"
+  - name: "Thinakkural"
+    url: ""                   # TODO: find URL
+    language: "ta"
+    section: "general"
+    status: "no_url"
+    notes: "Find and test URL."
+
+  - name: "Uthayan"
+    url: ""                   # TODO: find URL — Northern Sri Lanka focus
+    language: "ta"
+    section: "general"
+    status: "no_url"
+    notes: "Northern Sri Lanka focus. Find and test URL."
+
+  # ════════════════════════════════════════════════════════════════════
+  # ENGLISH — Verified working (returning items)
+  # ════════════════════════════════════════════════════════════════════
 
   - name: "Ada Derana English"
     url: "https://www.adaderana.lk/rss.php"
     language: "en"
     section: "general"
-    status: "unverified"
-    notes: "Good for cross-checking Sinhala items"
+    status: "verified"        # ✅ 2026-10-22 — 25 items
+    notes: "Best performing English feed. Use for cross-checking Sinhala items."
+
+  - name: "Lanka Business Online"
+    url: "https://www.lankabusinessonline.com/feed/"
+    language: "en"
+    section: "business"
+    status: "verified"        # ✅ 2026-10-22 — 10 items
+    notes: "Check that items are Sri Lanka-focused; sample headline suggested some international content."
+
+  # ════════════════════════════════════════════════════════════════════
+  # ENGLISH — Feed responds HTTP 200 but returned 0 items
+  # ════════════════════════════════════════════════════════════════════
+
+  - name: "Daily FT"
+    url: "https://www.ft.lk/rss"
+    language: "en"
+    section: "business"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
+    notes: "Excellent business source. Try https://www.ft.lk/rss/business or https://www.ft.lk/rss.xml"
+
+  - name: "Daily Mirror"
+    url: "https://www.dailymirror.lk/rss"
+    language: "en"
+    section: "business"
+    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
+    notes: "Try https://www.dailymirror.lk/rss.xml or a specific section feed."
+
+  # ════════════════════════════════════════════════════════════════════
+  # ENGLISH — Blocked
+  # ════════════════════════════════════════════════════════════════════
+
+  - name: "EconomyNext"
+    url: "https://economynext.com/feed/"
+    language: "en"
+    section: "economy"
+    status: "blocked"         # ❌ 2026-10-22 — HTTP 403
+    notes: "Best English business source but blocked. Try mobile hotspot. Also try https://economynext.com/rss/"
