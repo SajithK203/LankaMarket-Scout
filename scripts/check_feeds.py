@@ -27,7 +27,7 @@ from tabulate import tabulate
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 SOURCES_PATH = Path("data/feeds/sources.yaml")
-USER_AGENT = "LankaMarketScout/0.1 (research prototype — feed test)"
+USER_AGENT = "LankaMarketScout/0.1 (research prototype - feed test)"
 REQUEST_DELAY = 3  # seconds between requests
 
 
