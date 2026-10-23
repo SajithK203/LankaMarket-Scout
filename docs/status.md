@@ -16,7 +16,7 @@
 | LLM extraction (Stage 5) | ✅ Done | `collector/extractor.py` — supports Gemini, OpenAI, & multilingual fallback; backfill completed |
 | SQLite database schema | ✅ Done | `database/db.py` — schema and query helpers; populated with initial 15 news facts |
 | Vector store (ChromaDB) | ❌ Not started | For semantic / cross-lingual search |
-| Agent loop | 🟡 Mocked | `agent/loop.py` — structure complete; LLM calls are mocked (Member B to implement) |
+| Agent loop | ✅ Done | `agent/loop.py` — multilingual perceive (si/ta/en), dynamic decide, national fallback, & conflict detection |
 | search_news tool | ✅ Ready | `agent/tools/search.py` — queries DB; initial news items now available |
 | compute_trend tool | ✅ Ready | `agent/tools/trend.py` — logic done; can run against DB data |
 | write_report tool | ✅ Done | `agent/tools/report.py` — full structure; generates from evidence |
