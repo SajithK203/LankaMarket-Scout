@@ -4,7 +4,7 @@
 
 | Feature | Status | Notes |
 |---|---|---|
-| RSS feed collection | 🔄 In Progress | `scripts/check_feeds.py` written; Sinhala + English verified; Tamil feeds investigated 2026-10-23 |
+| RSS feed collection | ✅ Done | `collector/collect.py` live run 2026-10-23: 83 items fetched, 15 business facts saved to DB (si: 4, ta: 5, en: 6) |
 | Tamil RSS feed search | ✅ Done | 2026-10-23: Found Tamil Mirror (2 feeds) + Thinakaran. Virakesari/Uthayan have no RSS. |
 | Text cleaning (HTML, Unicode NFC) | ✅ Done | `collector/cleaner.py` |
 | Legacy Sinhala font detection | ✅ Done | `collector/cleaner.py` — detects and skips |
@@ -14,14 +14,14 @@
 | Keyword filter (Stage 4) | ✅ Done | `collector/filter.py` — `keyword_filter()` uses `data/keywords/business_keywords.yaml` |
 | Pipeline wired (collect → clean → filter → save) | ✅ Done | `collector/collect.py` — full Stages 1–4 connected; Stage 5 hooks in when `extractor.py` is ready |
 | LLM extraction (Stage 5) | ❌ Not started | `collector/extractor.py` to be built by Member B; pipeline will skip gracefully until ready |
-| SQLite database schema | ✅ Done | `database/db.py` — schema and query helpers |
+| SQLite database schema | ✅ Done | `database/db.py` — schema and query helpers; populated with initial 15 news facts |
 | Vector store (ChromaDB) | ❌ Not started | For semantic / cross-lingual search |
 | Agent loop | 🟡 Mocked | `agent/loop.py` — structure complete; LLM calls are mocked (Member B to implement) |
-| search_news tool | 🟡 Mocked | `agent/tools/search.py` — queries DB; DB is empty until collector runs |
-| compute_trend tool | 🟡 Mocked | `agent/tools/trend.py` — logic done; depends on real data |
+| search_news tool | ✅ Ready | `agent/tools/search.py` — queries DB; initial news items now available |
+| compute_trend tool | ✅ Ready | `agent/tools/trend.py` — logic done; can run against DB data |
 | write_report tool | ✅ Done | `agent/tools/report.py` — full structure; generates from evidence |
 | Streamlit interface | ✅ Done | `interface/app.py` — full UI with confidence badge, opportunities/risks, evidence links, disclaimer |
-| Evaluation label tool | ✅ Done | `evaluation/label_tool.py` — `--export`, `--label`, `--stats` modes; reads from DB |
+| Evaluation label tool | ✅ Done | `evaluation/label_tool.py` — `--export`, `--label`, `--stats` modes; ready to export DB rows |
 | Hand-labelled Sinhala headlines | ❌ Not started | Target: 50; needs collector to run first |
 | Hand-labelled Tamil headlines | ❌ Not started | Target: 50; needs collector to run first (feeds now available) |
 | Evaluation (precision/recall) | ❌ Not started | Needs hand-labelled data and LLM extractor |
