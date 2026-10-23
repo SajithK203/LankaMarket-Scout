@@ -15,7 +15,7 @@
 | Pipeline wired (collect → clean → filter → save) | ✅ Done | `collector/collect.py` — full Stages 1–4 connected; Stage 5 hooks in when `extractor.py` is ready |
 | LLM extraction (Stage 5) | ✅ Done | `collector/extractor.py` — supports Gemini, OpenAI, & multilingual fallback; backfill completed |
 | SQLite database schema | ✅ Done | `database/db.py` — schema and query helpers; populated with initial 15 news facts |
-| Vector store (ChromaDB) | ❌ Not started | For semantic / cross-lingual search |
+| Vector store (ChromaDB) | ✅ Done | `database/vector_store.py` — persistent store at `data/chroma/`, multilingual embeddings, auto-sync |
 | Agent loop | ✅ Done | `agent/loop.py` — multilingual perceive (si/ta/en), dynamic decide, national fallback, & conflict detection |
 | search_news tool | ✅ Ready | `agent/tools/search.py` — queries DB; initial news items now available |
 | compute_trend tool | ✅ Ready | `agent/tools/trend.py` — logic done; can run against DB data |
