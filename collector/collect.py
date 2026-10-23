@@ -329,6 +329,14 @@ def collect_all(dry_run: bool = False, lang_filter: str | None = None) -> list[d
     saved = save_to_db(ready_to_save)
     log.info(f"Saved {saved} new items ({len(ready_to_save) - saved} duplicates skipped)")
 
+    # ── Stage 7: VECTOR STORE SYNC (ChromaDB) ─────────────────────────────────
+    try:
+        from database.vector_store import sync_from_sqlite
+        synced = sync_from_sqlite()
+        log.info(f"Vector store synced: {synced} items in ChromaDB")
+    except Exception as e:
+        log.warning(f"Vector store sync skipped: {e}")
+
     return ready_to_save
 
 
