@@ -22,9 +22,9 @@
 | write_report tool | ✅ Done | `agent/tools/report.py` — full structure; generates from evidence |
 | Streamlit interface | ✅ Done | `interface/app.py` — full UI with confidence badge, opportunities/risks, evidence links, disclaimer |
 | Evaluation label tool | ✅ Done | `evaluation/label_tool.py` — `--export`, `--label`, `--stats` modes; ready to export DB rows |
-| Hand-labelled Sinhala headlines | ❌ Not started | Target: 50; needs collector to run first |
-| Hand-labelled Tamil headlines | ❌ Not started | Target: 50; needs collector to run first (feeds now available) |
-| Evaluation (precision/recall) | ❌ Not started | Needs hand-labelled data and LLM extractor |
+| Hand-labelled Sinhala headlines | 🔄 In Progress | Initial set labelled in `data/labels/sinhala_labels.csv`; expandable as collector runs |
+| Hand-labelled Tamil headlines | 🔄 In Progress | Initial set labelled in `data/labels/tamil_labels.csv`; expandable as collector runs |
+| Evaluation (precision/recall) | ✅ Done | `evaluation/evaluate.py` — computes Precision, Recall, F1, Confusion Matrix, and attribute accuracy |
 | User interviews | ❌ Not started | Target: 3-5 business owners before proposal submission |
 
 ## Feed Status
