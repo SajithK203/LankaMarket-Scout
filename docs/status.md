@@ -4,7 +4,8 @@
 
 | Feature | Status | Notes |
 |---|---|---|
-| RSS feed collection | 🔄 In Progress | `scripts/check_feeds.py` written; feeds not yet verified from our network |
+| RSS feed collection | 🔄 In Progress | `scripts/check_feeds.py` written; Sinhala + English verified; Tamil feeds investigated 2026-10-23 |
+| Tamil RSS feed search | ✅ Done | 2026-10-23: Found Tamil Mirror (2 feeds) + Thinakaran. Virakesari/Uthayan have no RSS. |
 | Text cleaning (HTML, Unicode NFC) | ✅ Done | `collector/cleaner.py` |
 | Legacy Sinhala font detection | ✅ Done | `collector/cleaner.py` — detects and skips |
 | Deduplication | ✅ Done | `collector/cleaner.py` — by link and headline similarity |
@@ -22,36 +23,39 @@
 | Streamlit interface | ✅ Done | `interface/app.py` — full UI with confidence badge, opportunities/risks, evidence links, disclaimer |
 | Evaluation label tool | ✅ Done | `evaluation/label_tool.py` — `--export`, `--label`, `--stats` modes; reads from DB |
 | Hand-labelled Sinhala headlines | ❌ Not started | Target: 50; needs collector to run first |
-| Hand-labelled Tamil headlines | ❌ Not started | Target: 50; needs Tamil feeds working |
+| Hand-labelled Tamil headlines | ❌ Not started | Target: 50; needs collector to run first (feeds now available) |
 | Evaluation (precision/recall) | ❌ Not started | Needs hand-labelled data and LLM extractor |
 | User interviews | ❌ Not started | Target: 3-5 business owners before proposal submission |
 
 ## Feed Status
 
+Last tested: **2026-10-23** (Tamil investigation) | **2026-10-22** (Sinhala/English)
+
 | Outlet | Language | Status | Notes |
 |---|---|---|---|
-| Lankadeepa | si | 🔄 Unverified | Test from our network — `python scripts/check_feeds.py --lang si` |
-| Neth News | si | 🔄 Unverified | Test |
-| Siyatha News | si | 🔄 Unverified | BIAS: many China-related stories |
-| Lanka Truth | si | 🔄 Unverified | BIAS: politically partisan |
-| Lanka C News | si | 🔄 Unverified | Tabloid-style |
-| Ada Derana Sinhala | si | ⛔ Blocked (cloud) | Test from home/mobile hotspot |
-| Dinamina | si | ⛔ Blocked (cloud) | Test from home/mobile hotspot |
-| Divaina | si | ⛔ Blocked (cloud) | May use legacy Sinhala font — check |
-| Ada (ada.lk) | si | ⛔ Blocked | Was returning 403 on 14 Oct; re-test |
-| Newsfirst Sinhala | si | ⛔ Blocked (cloud) | Test from home/mobile hotspot |
-| Mawbima | si | ⛔ Blocked (cloud) | Test from home/mobile hotspot |
-| Virakesari | ta | ❓ No URL | Find RSS URL first — search `virakesari.lk rss` |
-| Thinakaran | ta | ❓ No URL | Find RSS URL — search `thinakaran.lk rss` |
-| Thinakkural | ta | ❓ No URL | Find RSS URL |
-| Uthayan | ta | ❓ No URL | Find RSS URL |
-| Tamil Guardian | ta | 🔄 Unverified | URL set; test it |
-| Tamil Mirror | ta | ❓ No URL | Find RSS URL |
-| EconomyNext | en | 🔄 Unverified | Best English source |
-| Lanka Business Online | en | 🔄 Unverified | Test |
-| Daily FT | en | 🔄 Unverified | Test |
-| Daily Mirror | en | 🔄 Unverified | Test |
-| Ada Derana English | en | 🔄 Unverified | Test |
+| Ada Derana Sinhala | si | ✅ Verified | 2026-10-22 — 25 items |
+| Dinamina | si | ✅ Verified | 2026-10-22 — 10 items |
+| Mawbima | si | ✅ Verified | 2026-10-22 — 10 items |
+| Lanka C News | si | ✅ Verified | 2026-10-22 — 10 items. Tabloid-style — lower credibility weight |
+| Lankadeepa | si | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. Try /rss/business or /rss/economy |
+| Siyatha News | si | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. BIAS: many China-related stories |
+| Divaina | si | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. May use legacy Sinhala font |
+| Ada (ada.lk) | si | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. Try /feed or /rss.xml |
+| Newsfirst Sinhala | si | ⛔ Blocked | 2026-10-22 — HTTP 403 |
+| Lanka Truth | si | ⛔ Blocked | 2026-10-22 — HTTP 401. Requires login — skip |
+| Neth News | si | ⛔ Dead | 2026-10-22 — HTTP 404 |
+| Tamil Guardian | ta | ✅ Verified | 2026-10-22 — 9 items. International/diaspora focus |
+| Tamil Mirror (News) | ta | ✅ **NEW** Verified | **2026-10-23 — 12 items.** URL: `/rss/news/175`. Real Tamil content confirmed |
+| Tamil Mirror (Business) | ta | ✅ **NEW** Verified | **2026-10-23 — 12 items.** URL: `/rss/business/50`. Business section |
+| Thinakaran | ta | ✅ **NEW** Verified | **2026-10-23 — 10 items.** URL: `/feed/` (WordPress site). Tamil headlines confirmed |
+| Virakesari | ta | ⛔ Dead | **2026-10-23 — No RSS.** /rss=404, /feed/=500. No public feed. Scraping needed |
+| Thinakkural | ta | ⛔ Blocked | **2026-10-23 — Infinite redirect loop** on /feed/. Re-test later |
+| Uthayan | ta | ⛔ Dead | **2026-10-23 — HTTP 404, SSL cert expired.** Site may be defunct |
+| Ada Derana English | en | ✅ Verified | 2026-10-22 — 25 items |
+| Lanka Business Online | en | ✅ Verified | 2026-10-22 — 10 items. Check for Sri Lanka-relevant content |
+| Daily FT | en | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. Try /rss/business or /rss.xml |
+| Daily Mirror | en | ⚠️ Empty | 2026-10-22 — HTTP 200 but 0 items. Try /rss.xml or section feed |
+| EconomyNext | en | ⛔ Blocked | 2026-10-22 — HTTP 403. Best English business source — try mobile hotspot |
 
 ## Cost Tracking
 

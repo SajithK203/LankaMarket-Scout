@@ -9,8 +9,9 @@
 #   no_url     = RSS URL not yet found; search manually
 #   skip       = deliberately excluded from collection
 #
-# TESTED: 2026-10-22 from campus/home network
-# Result: 13/22 responding | 7 with items | 6 empty | 4 blocked/dead | 5 no URL
+# TESTED: 2026-10-22 from campus/home network (Sinhala/English)
+# TESTED: 2026-10-23 from campus network (Tamil feed investigation)
+# Result: 16/22 responding | 10 with items | 4 empty | 5 blocked/dead | 2 no_url remaining
 
 sources:
 
@@ -115,46 +116,51 @@ sources:
     status: "verified"        # ✅ 2026-10-22 — 9 items
     notes: "International/diaspora focus. Verify that items are Sri Lanka-relevant before using."
 
+  - name: "Tamil Mirror (News)"
+    url: "https://www.tamilmirror.lk/rss/news/175"
+    language: "ta"
+    section: "general"
+    status: "verified"        # ✅ 2026-10-23 — 12 items. URL pattern: /rss/<category>/<id>
+    notes: "Sri Lanka-focused Tamil outlet (Wijeya Newspapers). Does not have a generic /feed/ — use category-specific RSS URL. ID 175 = general news."
+
+  - name: "Tamil Mirror (Business)"
+    url: "https://www.tamilmirror.lk/rss/business/50"
+    language: "ta"
+    section: "business"
+    status: "verified"        # ✅ 2026-10-23 — 12 items
+    notes: "Business section of Tamil Mirror. Use alongside News feed for broader coverage."
+
+  - name: "Thinakaran"
+    url: "https://www.thinakaran.lk/feed/"
+    language: "ta"
+    section: "general"
+    status: "verified"        # ✅ 2026-10-23 — 10 items. WordPress /feed/ endpoint confirmed working.
+    notes: "Major Sri Lankan Tamil daily. WordPress-based site; standard /feed/ URL works. Cross-check items for Sri Lanka relevance."
+
   # ════════════════════════════════════════════════════════════════════
-  # TAMIL — URLs still needed (HIGH PRIORITY — needed for +10 bonus points)
-  # To find: open browser, go to the site, look for an RSS icon or
-  # try appending /rss /feed /rss.xml to the domain.
+  # TAMIL — No working RSS found (investigated 2026-10-23)
   # ════════════════════════════════════════════════════════════════════
 
   - name: "Virakesari"
-    url: ""                   # TODO: try https://www.virakesari.lk/rss or /feed
+    url: ""                   # Tried: /rss (404), /feed/ (500), /?feed=rss2 (not RSS) — no feed available
     language: "ta"
     section: "business"
-    status: "no_url"
-    notes: "Major Sri Lankan Tamil daily. HIGH PRIORITY — finding this URL earns the Tamil bonus."
-
-  - name: "Tamil Mirror"
-    url: ""                   # TODO: try https://www.tamilmirror.lk/feed or /rss
-    language: "ta"
-    section: "business"
-    status: "no_url"
-    notes: "Sri Lanka-focused Tamil outlet. Important for local Tamil coverage."
-
-  - name: "Thinakaran"
-    url: ""                   # TODO: try https://www.thinakaran.lk/rss or /feed
-    language: "ta"
-    section: "business"
-    status: "no_url"
-    notes: "Find and test URL."
+    status: "dead"
+    notes: "INVESTIGATED 2026-10-23: Major Sri Lankan Tamil daily (Express Newspapers). No publicly exposed RSS/Atom feed found. /rss returns 404, /feed/ returns 500. Consider web scraping as fallback or check periodically for a future feed."
 
   - name: "Thinakkural"
-    url: ""                   # TODO: find URL
+    url: "https://thinakkural.lk/feed/"   # URL exists but causes infinite redirect loop
     language: "ta"
     section: "general"
-    status: "no_url"
-    notes: "Find and test URL."
+    status: "blocked"         # ❌ 2026-10-23 — Exceeded 30 redirects (redirect loop)
+    notes: "INVESTIGATED 2026-10-23: Feed URL triggers an infinite redirect loop (30+ redirects). Site is reachable in browser but feed endpoint is broken. Skip for now — re-test in a future session."
 
   - name: "Uthayan"
-    url: ""                   # TODO: find URL — Northern Sri Lanka focus
+    url: "https://www.uthayan.com/feed/"  # 404 on all tried paths
     language: "ta"
     section: "general"
-    status: "no_url"
-    notes: "Northern Sri Lanka focus. Find and test URL."
+    status: "dead"            # ❌ 2026-10-23 — HTTP 404, SSL cert expired
+    notes: "INVESTIGATED 2026-10-23: Northern Sri Lanka Tamil newspaper. All RSS paths return 404. SSL certificate expired. Website may be defunct or moved. Skip unless a new URL is found."
 
   # ════════════════════════════════════════════════════════════════════
   # ENGLISH — Verified working (returning items)
