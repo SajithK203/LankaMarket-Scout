@@ -13,7 +13,7 @@
 | Section filter (drop sports/entertainment) | ✅ Done | `collector/filter.py` — `section_filter()` |
 | Keyword filter (Stage 4) | ✅ Done | `collector/filter.py` — `keyword_filter()` uses `data/keywords/business_keywords.yaml` |
 | Pipeline wired (collect → clean → filter → save) | ✅ Done | `collector/collect.py` — full Stages 1–4 connected; Stage 5 hooks in when `extractor.py` is ready |
-| LLM extraction (Stage 5) | ❌ Not started | `collector/extractor.py` to be built by Member B; pipeline will skip gracefully until ready |
+| LLM extraction (Stage 5) | ✅ Done | `collector/extractor.py` — supports Gemini, OpenAI, & multilingual fallback; backfill completed |
 | SQLite database schema | ✅ Done | `database/db.py` — schema and query helpers; populated with initial 15 news facts |
 | Vector store (ChromaDB) | ❌ Not started | For semantic / cross-lingual search |
 | Agent loop | 🟡 Mocked | `agent/loop.py` — structure complete; LLM calls are mocked (Member B to implement) |
