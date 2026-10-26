@@ -14,8 +14,13 @@ and any errors. Copy the results into data/feeds/sources.yaml (update the
 """
 
 import sys
+import io
 import time
 import argparse
+
+# Force UTF-8 output on Windows (avoids cp1252 emoji crash)
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -69,7 +74,7 @@ def check_one_feed(source: dict) -> dict:
             "name": source["name"],
             "language": source["language"],
             "url": url,
-            "status": "✅ OK",
+            "status": "OK",
             "item_count": len(items),
             "sample": sample,
             "error": "",
@@ -80,7 +85,7 @@ def check_one_feed(source: dict) -> dict:
             "name": source["name"],
             "language": source["language"],
             "url": url,
-            "status": "❌ TIMEOUT",
+            "status": "TIMEOUT",
             "item_count": 0,
             "sample": "",
             "error": "Request timed out after 10 seconds",
@@ -90,7 +95,7 @@ def check_one_feed(source: dict) -> dict:
             "name": source["name"],
             "language": source["language"],
             "url": url,
-            "status": "❌ ERROR",
+            "status": "ERROR",
             "item_count": 0,
             "sample": "",
             "error": str(e),
@@ -138,7 +143,7 @@ def main():
             print(f"  {r['name']}: {r['error']}")
 
     # Summary counts
-    ok = sum(1 for r in results if "OK" in r["status"])
+    ok = sum(1 for r in results if r["status"] == "OK")
     print(f"\nSummary: {ok}/{len(results)} feeds working")
     print("\nNext step: update 'status' field in data/feeds/sources.yaml based on these results.")
 

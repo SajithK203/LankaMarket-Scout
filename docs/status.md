@@ -4,7 +4,7 @@
 
 | Feature | Status | Notes |
 |---|---|---|
-| RSS feed collection | ✅ Done | `collector/collect.py` live run 2026-10-23: 83 items fetched, 15 business facts saved to DB (si: 4, ta: 5, en: 6) |
+| RSS feed collection | ✅ Done | `collector/collect.py` live run 2026-10-26: 133 items fetched, 26 business facts saved to DB (si: 15, ta: 6, en: 5), ChromaDB synced |
 | Tamil RSS feed search | ✅ Done | 2026-10-23: Found Tamil Mirror (2 feeds) + Thinakaran. Virakesari/Uthayan have no RSS. |
 | Text cleaning (HTML, Unicode NFC) | ✅ Done | `collector/cleaner.py` |
 | Legacy Sinhala font detection | ✅ Done | `collector/cleaner.py` — detects and skips |

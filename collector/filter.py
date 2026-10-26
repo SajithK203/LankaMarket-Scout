@@ -159,7 +159,7 @@ def keyword_filter(items: list[dict]) -> list[dict]:
     kept = [item for item in items if has_business_keyword(item["headline"])]
     dropped = before - len(kept)
     pct = int((len(kept) / before * 100)) if before else 0
-    print(f"  Keyword filter: {before} → {len(kept)} items kept ({pct}%), {dropped} dropped")
+    print(f"  Keyword filter: {before} -> {len(kept)} items kept ({pct}%), {dropped} dropped")
     return kept
 
 

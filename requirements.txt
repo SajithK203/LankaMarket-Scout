@@ -10,7 +10,7 @@ unicodedata2==15.1.0        # Unicode normalisation (NFC)
 
 # ── LLM & embeddings ──────────────────────────────────────────────
 openai==1.35.7              # OpenAI-compatible API (swap for Gemini etc.)
-google-generativeai==0.7.2  # Gemini API (test for Sinhala/Tamil accuracy)
+google-genai>=1.0.0         # Gemini API — new official SDK (replaces google-generativeai)
 sentence-transformers==3.0.1 # multilingual-e5 / BGE-M3 embeddings
 
 # ── Storage ────────────────────────────────────────────────────────

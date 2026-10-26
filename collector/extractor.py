@@ -90,16 +90,21 @@ def load_llm_config() -> dict:
     # Fallback to env vars
     provider = cfg.get("provider") or os.getenv("LLM_PROVIDER") or "gemini"
     api_key = cfg.get("api_key")
-    if not api_key or "YOUR_API_KEY" in api_key:
+    if not api_key or "YOUR_API_KEY" in api_key or str(api_key).startswith("AQ."):
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
 
     if not cfg.get("provider"):
         if os.getenv("OPENAI_API_KEY") and not (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")):
             provider = "openai"
 
-    model = cfg.get("model") or (
-        "gemini-1.5-flash" if provider == "gemini" else "gpt-4o-mini"
-    )
+    model = cfg.get("model") or "gemini-1.5-flash"
+    if provider == "gemini":
+        valid_gemini = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.0-pro"]
+        if model not in valid_gemini:
+            model = "gemini-1.5-flash"
+    elif provider == "openai":
+        if not model or "gemini" in model:
+            model = "gpt-4o-mini"
 
     return {
         "provider": provider,
@@ -161,7 +166,7 @@ def _extract_with_gemini(item: dict, cfg: dict) -> dict:
         f"Description/Snippet: {item.get('summary', '') or item.get('content', '')}\n"
     )
 
-    response = model.generate_content(prompt)
+    response = model.generate_content(prompt, request_options={"timeout": 10.0})
     return _clean_json_response(response.text)
 
 
@@ -273,22 +278,30 @@ def _heuristic_fallback(item: dict) -> dict:
     }
 
 
+_LLM_DISABLED = False
+
+
 def extract_item(item: dict) -> dict:
     """
     Extract structured business intelligence fields for a single news item.
     Returns the enriched dict with all Stage 5 fields.
     """
+    global _LLM_DISABLED
     cfg = load_llm_config()
     extracted_data = None
 
-    if cfg.get("api_key"):
+    if cfg.get("api_key") and not _LLM_DISABLED:
         try:
             if cfg["provider"] == "gemini":
                 extracted_data = _extract_with_gemini(item, cfg)
             elif cfg["provider"] == "openai":
                 extracted_data = _extract_with_openai(item, cfg)
         except Exception as e:
-            log.warning(f"LLM API extraction error ({cfg['provider']}): {e}. Using fallback.")
+            log.warning(
+                f"LLM API extraction error ({cfg['provider']}): {e}. "
+                "Disabling API calls for this run and using rule-based fallback."
+            )
+            _LLM_DISABLED = True
             extracted_data = None
 
     if not extracted_data:
@@ -318,9 +331,8 @@ def extract_batch(items: list[dict]) -> list[dict]:
     cfg = load_llm_config()
     if not cfg.get("api_key"):
         log.info(
-            "  [Stage 5] No LLM API key detected in GEMINI_API_KEY / config/settings.yaml. "
-            "Using high-precision multilingual heuristic extraction. "
-            "(To enable Gemini/OpenAI, set GEMINI_API_KEY in .env or settings.yaml)"
+            "  [Stage 5] No valid LLM API key configured in GEMINI_API_KEY / config/settings.yaml. "
+            "Using high-precision multilingual heuristic extraction."
         )
 
     for item in items:

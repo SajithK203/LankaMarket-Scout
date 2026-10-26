@@ -23,8 +23,18 @@ Member A owns this file.
 """
 
 import argparse
+import io
 import logging
+import sys
 import time
+
+# Force UTF-8 output on Windows (avoids cp1252 crash on arrow/emoji chars)
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -53,14 +63,14 @@ USER_AGENT    = "LankaMarketScout/0.1 (research prototype; open source)"
 def load_sources(path: Path, lang_filter: str | None = None) -> list[dict]:
     """
     Load feed list from sources.yaml.
-    Skips entries with no URL and entries marked status='skip'.
+    Skips entries with no URL and entries marked status='skip', 'blocked', or 'dead'.
     Optional lang_filter: 'si' | 'ta' | 'en' — only load that language.
     """
     with open(path, encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     sources = config.get("sources", [])
-    sources = [s for s in sources if s.get("url") and s.get("status") != "skip"]
+    sources = [s for s in sources if s.get("url") and s.get("status") not in ("skip", "blocked", "dead")]
 
     if lang_filter:
         sources = [s for s in sources if s.get("language") == lang_filter]

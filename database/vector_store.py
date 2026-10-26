@@ -22,9 +22,18 @@ import logging
 import math
 import re
 import sqlite3
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+# Force UTF-8 output on Windows (avoids cp1252 crash on Sinhala/Tamil/Unicode chars)
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 import chromadb
 from chromadb.api.types import Documents, EmbeddingFunction, Embeddings

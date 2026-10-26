@@ -11,7 +11,8 @@
 #
 # TESTED: 2026-10-22 from campus/home network (Sinhala/English)
 # TESTED: 2026-10-23 from campus network (Tamil feed investigation)
-# Result: 16/22 responding | 10 with items | 4 empty | 5 blocked/dead | 2 no_url remaining
+# TESTED: 2026-10-26 full re-test — 23 feeds
+# Result: 15/23 working with data | 4 empty (200 but 0 items) | 4 blocked/dead | 1 no_url
 
 sources:
 
@@ -63,15 +64,15 @@ sources:
     url: "https://siyathanews.lk/feed/"
     language: "si"
     section: "general"
-    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
-    notes: "BIAS: many China-related stories. Try /?feed=rss2 or /rss"
+    status: "verified"        # ✅ 2026-10-26 — 50 items (was empty on 2026-10-22, now working)
+    notes: "BIAS: many China-related stories. High volume (50 items). Use with lower credibility weight."
 
   - name: "Divaina"
     url: "https://www.divaina.com/rss"
     language: "si"
     section: "business"
-    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
-    notes: "May use legacy Sinhala font encoding — check items manually. Try /feed/"
+    status: "blocked"         # ❌ 2026-10-26 — Connection refused (actively refused TCP connection)
+    notes: "Was returning 0 items 2026-10-22; now connection refused entirely. Server may be blocking automated access. Skip for now."
 
   - name: "Ada (ada.lk)"
     url: "https://www.ada.lk/rss"
