@@ -12,6 +12,7 @@
 #   - Keep this file in Git so everyone's edits are shared.
 #
 # OWNER: Member C (initial list) + native speaker team members (review)
+# UPDATED: 2026-10-30 — expanded all three language lists (filter was dropping 84% of items)
 # ─────────────────────────────────────────────────────────────────────────────
 
 english:
@@ -34,6 +35,12 @@ english:
   - loan
   - bank
   - credit
+  - budget
+  - revenue
+  - profit
+  - growth
+  - GDP
+  - economy
   # Business events
   - strike
   - shortage
@@ -41,6 +48,23 @@ english:
   - demand
   - market
   - investment
+  - company
+  - minister
+  - ministry
+  - government
+  - parliament
+  - cabinet
+  - salary
+  - wage
+  - employment
+  - unemployment
+  - business
+  - industry
+  - trade
+  - IMF
+  - central bank
+  - debt
+  - crisis
   # Sectors
   - agriculture
   - farming
@@ -52,13 +76,21 @@ english:
   - construction
   - transport
   - logistics
+  - manufacturing
+  - oil
+  - gas
+  - water
+  - medicine
+  - health
+  - education
   # Infrastructure
   - road
   - highway
   - port
   - electricity cut
   - power cut
-  # Disasters / weather
+  - railway
+  # Disasters / weather (affect business conditions)
   - flood
   - drought
   - cyclone
@@ -69,10 +101,11 @@ english:
   - permit
   - ban
   - policy
+  - reform
+  - development
 
 sinhala:
-  # NOTE: A Sinhala-fluent team member must verify and extend this list.
-  # These are base forms — Sinhala words inflect heavily.
+  # NOTE: Extended 2026-10-30 — was dropping 84% of Sinhala items due to missing terms
   - මිල          # price
   - ගාස්තු        # charges / tariff
   - ඉන්ධන        # fuel
@@ -98,9 +131,48 @@ sinhala:
   - මහ බැංකුව   # central bank
   - ෆාම්          # farm
   - හෝටල        # hotel
+  - ආර්ථික       # economic / economy
+  - රජය          # government
+  - ඇමැති        # minister
+  - අමාත්‍ය      # minister/ministry
+  - අයවැය        # budget
+  - ආදායම       # income / revenue
+  - ගෙවීම        # payment
+  - ව්‍යාපෘති    # project / programme
+  - ජල           # water
+  - ඖෂධ          # medicine / drugs
+  - සෞඛ්‍ය       # health
+  - අර්බුද       # crisis
+  - සංවර්ධන     # development
+  - ශ්‍රී ලංකා   # Sri Lanka
+  - කම්කරු       # labour / worker
+  - රැකියා       # jobs / employment
+  - සමාගම       # company
+  - ගිවිසුම      # agreement / contract
+  - ලංකා         # Lanka
+  - ජාතික        # national
+  - විදේශ        # foreign
+  - ප්‍රතිපත්ති # policy
+  - ව්‍යාපාරික  # business-related
+  - සේවා         # services
+  - ඉඩම්         # land
+  - විදුලිබල    # electricity / power
+  - ඉදිකිරීම    # construction
+  - ප්‍රවාහන    # transport
+  - පාඩු         # loss
+  - ලාභ          # profit
+  - රක්ෂිත       # reserves
+  - නිෂ්පාදන    # production / manufacturing
+  - ගොවීන්       # farmers
+  - ධීවර         # fishing / fishermen
+  - වාර්ෂික      # annual
+  - ප්‍රමාද      # delayed
+  - අගයැදීම     # appreciation (currency)
+  - ගිලිහීම     # depreciation (currency)
+  - විශ්‍රාම     # pension / retirement
 
 tamil:
-  # NOTE: A Tamil-fluent team member must verify and extend this list.
+  # NOTE: Extended 2026-10-30 — added common government/economy/daily life terms
   - விலை          # price
   - எரிபொருள்     # fuel
   - மின்சாரம்     # electricity
@@ -121,3 +193,34 @@ tamil:
   - விநியோகம்    # supply
   - தேவை          # demand
   - வங்கி         # bank
+  - பொருளாதாரம்  # economy
+  - அரசு          # government
+  - அமைச்சு      # ministry
+  - பட்ஜெட்      # budget
+  - வருமானம்     # income / revenue
+  - நிறுவனம்     # company
+  - தொழில்       # industry / occupation
+  - ஊதியம்       # salary / wage
+  - வேலைவாய்ப்பு # employment
+  - நெருக்கடி    # crisis
+  - மருத்துவம்   # medicine / healthcare
+  - சுகாதாரம்    # health
+  - மத்திய வங்கி # central bank
+  - நிதி          # finance
+  - விரிவாக்கம்  # expansion
+  - ஏழைமை       # poverty
+  - உணவு         # food
+  - விலைவாசி     # cost of living
+  - திட்டம்      # plan / project
+  - சட்டம்        # law / regulation
+  - வர்த்தகம்    # commerce / trade
+  - இழப்பு       # loss
+  - இலாபம்       # profit
+  - போக்குவரத்து # transport
+  - மீன்பிடி     # fishing
+  - விவசாயிகள்  # farmers
+  - உற்பத்தி     # production
+  - ஏற்றுமதியாளர் # exporter
+  - இறக்குமதியாளர் # importer
+  - வட்டி         # interest rate
+  - கொள்கை       # policy

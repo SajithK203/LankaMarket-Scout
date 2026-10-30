@@ -185,19 +185,33 @@ sources:
   # ENGLISH — Feed responds HTTP 200 but returned 0 items
   # ════════════════════════════════════════════════════════════════════
 
-  - name: "Daily FT"
-    url: "https://www.ft.lk/rss"
+  - name: "Daily FT (Top Stories)"
+    url: "https://www.ft.lk/rss/top-story/26"
     language: "en"
     section: "business"
-    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
-    notes: "Excellent business source. Try https://www.ft.lk/rss/business or https://www.ft.lk/rss.xml"
+    status: "verified"        # ✅ 2026-10-30 — 10 items. /rss/top-story/26 works.
+    notes: "Excellent business source. Generic /rss URL returns 0 items — must use category-specific URL."
 
-  - name: "Daily Mirror"
-    url: "https://www.dailymirror.lk/rss"
+  - name: "Daily FT (Sectors)"
+    url: "https://www.ft.lk/rss/sectors/20"
+    language: "en"
+    section: "economy"
+    status: "verified"        # ✅ 2026-10-30 — 10 items. /rss/sectors/20 works.
+    notes: "Sectors RSS from Daily FT — covers industry and economy news."
+
+  - name: "Daily Mirror (Breaking News)"
+    url: "https://www.dailymirror.lk/rss/breaking_news/108"
+    language: "en"
+    section: "general"
+    status: "verified"        # ✅ 2026-10-30 — 12 items. Category-specific URL works.
+    notes: "Generic /rss URL returns 0 items — must use category-specific URL."
+
+  - name: "Daily Mirror (Business)"
+    url: "https://www.dailymirror.lk/rss/business_24_7/395"
     language: "en"
     section: "business"
-    status: "empty"           # ⚠️ 2026-10-22 — HTTP 200 but 0 items
-    notes: "Try https://www.dailymirror.lk/rss.xml or a specific section feed."
+    status: "verified"        # ✅ 2026-10-30 — 12 items.
+    notes: "Business section feed. High quality English business source."
 
   # ════════════════════════════════════════════════════════════════════
   # ENGLISH — Blocked
