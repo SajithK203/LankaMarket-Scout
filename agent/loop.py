@@ -112,14 +112,23 @@ def llm_plan(question: str) -> dict:
     if cfg.get("api_key"):
         try:
             if cfg["provider"] == "gemini":
-                import google.generativeai as genai
-                genai.configure(api_key=cfg["api_key"])
-                model = genai.GenerativeModel(
-                    model_name=cfg.get("model", "gemini-1.5-flash"),
-                    generation_config={"temperature": 0.1, "response_mime_type": "application/json"},
-                )
+                from google import genai
+                from google.genai import types
+
+                client = genai.Client(api_key=cfg["api_key"])
+                model_name = cfg.get("model", "models/gemini-3.5-flash-lite")
+                if not model_name.startswith("models/"):
+                    model_name = "models/" + model_name
+
                 prompt = f"{PLAN_SYSTEM_PROMPT}\n\nUser Question:\n{question}"
-                resp = model.generate_content(prompt)
+                resp = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.1,
+                        response_mime_type="application/json",
+                    ),
+                )
                 plan = _clean_json_response(resp.text)
                 if plan.get("districts") and plan.get("sectors"):
                     plan.setdefault("days", 90)

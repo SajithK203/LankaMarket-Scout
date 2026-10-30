@@ -97,11 +97,11 @@ def load_llm_config() -> dict:
         if os.getenv("OPENAI_API_KEY") and not (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")):
             provider = "openai"
 
-    model = cfg.get("model") or "gemini-3.8-flash"
+    model = cfg.get("model") or "gemini-3.5-flash-lite"
     if provider == "gemini":
         # Accept any gemini model — avoid hardcoded whitelist that goes stale
         if not model or "gpt" in model:
-            model = "gemini-3.8-flash"
+            model = "gemini-3.5-flash-lite"
         # Ensure the models/ prefix required by google-genai SDK
         if not model.startswith("models/"):
             model = "models/" + model
