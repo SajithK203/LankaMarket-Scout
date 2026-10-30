@@ -90,18 +90,21 @@ def load_llm_config() -> dict:
     # Fallback to env vars
     provider = cfg.get("provider") or os.getenv("LLM_PROVIDER") or "gemini"
     api_key = cfg.get("api_key")
-    if not api_key or "YOUR_API_KEY" in api_key or str(api_key).startswith("AQ."):
+    if not api_key or "YOUR_API_KEY" in api_key or "YOUR_REAL_KEY" in api_key or api_key.strip() == "":
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or os.getenv("OPENAI_API_KEY") or ""
 
     if not cfg.get("provider"):
         if os.getenv("OPENAI_API_KEY") and not (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")):
             provider = "openai"
 
-    model = cfg.get("model") or "gemini-1.5-flash"
+    model = cfg.get("model") or "gemini-3.8-flash"
     if provider == "gemini":
-        valid_gemini = ["gemini-1.5-flash", "gemini-1.5-pro", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.0-pro"]
-        if model not in valid_gemini:
-            model = "gemini-1.5-flash"
+        # Accept any gemini model — avoid hardcoded whitelist that goes stale
+        if not model or "gpt" in model:
+            model = "gemini-3.8-flash"
+        # Ensure the models/ prefix required by google-genai SDK
+        if not model.startswith("models/"):
+            model = "models/" + model
     elif provider == "openai":
         if not model or "gemini" in model:
             model = "gpt-4o-mini"
@@ -145,18 +148,11 @@ def _clean_json_response(raw_text: str) -> dict:
 
 
 def _extract_with_gemini(item: dict, cfg: dict) -> dict:
-    """Extract using Google Gemini API."""
-    import google.generativeai as genai
+    """Extract using Google Gemini API (google-genai SDK >= 2.0)."""
+    from google import genai
+    from google.genai import types
 
-    genai.configure(api_key=cfg["api_key"])
-    model = genai.GenerativeModel(
-        model_name=cfg.get("model", "gemini-1.5-flash"),
-        generation_config={
-            "temperature": cfg.get("temperature", 0.1),
-            "max_output_tokens": cfg.get("max_tokens", 512),
-            "response_mime_type": "application/json",
-        },
-    )
+    client = genai.Client(api_key=cfg["api_key"])
 
     prompt = (
         f"{EXTRACTION_SYSTEM_PROMPT}\n\n"
@@ -166,7 +162,15 @@ def _extract_with_gemini(item: dict, cfg: dict) -> dict:
         f"Description/Snippet: {item.get('summary', '') or item.get('content', '')}\n"
     )
 
-    response = model.generate_content(prompt, request_options={"timeout": 10.0})
+    response = client.models.generate_content(
+        model=cfg.get("model", "models/gemini-3.8-flash"),
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            temperature=cfg.get("temperature", 0.1),
+            max_output_tokens=cfg.get("max_tokens", 512),
+            response_mime_type="application/json",
+        ),
+    )
     return _clean_json_response(response.text)
 
 
