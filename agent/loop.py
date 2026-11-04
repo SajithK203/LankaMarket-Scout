@@ -167,7 +167,7 @@ def llm_decide(plan: dict, evidence: list) -> dict:
     """
     step = len(evidence)
 
-    # Step 0: Search planned district & sector
+    # Step 0: Search planned district & sector with query string
     if step == 0:
         return {
             "type": "tool",
@@ -176,6 +176,7 @@ def llm_decide(plan: dict, evidence: list) -> dict:
                 "districts": plan.get("districts", ["national"]),
                 "sectors": plan.get("sectors", ["food_retail"]),
                 "days": plan.get("days", 90),
+                "query": plan.get("question") or plan.get("focus"),
             },
         }
 
@@ -194,6 +195,7 @@ def llm_decide(plan: dict, evidence: list) -> dict:
                     "districts": ["national"],
                     "sectors": plan.get("sectors", ["food_retail"]),
                     "days": plan.get("days", 90),
+                    "query": plan.get("question") or plan.get("focus"),
                 },
             }
         else:
@@ -252,6 +254,7 @@ def run_agent(question: str, user_profile: dict | None = None) -> dict:
     """
     # ── 1. PERCEIVE ───────────────────────────────────────────────────
     plan = llm_plan(question)
+    plan["question"] = question
     log.info(f"Agent plan: {plan}")
     evidence = []
 

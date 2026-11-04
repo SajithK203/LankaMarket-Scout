@@ -2,10 +2,6 @@
 interface/app.py
 ----------------
 LankaMarket Scout — Streamlit web interface.
-Member C owns this file.
-
-Run:
-    streamlit run interface/app.py
 """
 
 import sys
@@ -27,32 +23,43 @@ with st.sidebar:
     st.title("🇱🇰 LankaMarket Scout")
     st.caption("AI agent for Sri Lankan small-business intelligence")
     st.divider()
-    st.markdown("**Scope (Prototype)**")
-    st.markdown("- Districts: Kandy, Anuradhapura, Galle")
-    st.markdown("- Sectors: Agriculture, Food Retail")
-    st.markdown("- Languages: Sinhala, Tamil, English")
+    
+    st.subheader("🔄 Live News Feed")
+    if st.button("Fetch Latest News Feeds", use_container_width=True):
+        with st.spinner("Polling live RSS feeds across Sri Lanka..."):
+            try:
+                from collector.collect import collect_all
+                collected = collect_all(dry_run=False)
+                st.success(f"Fetched & synced {len(collected)} news items into database!")
+            except Exception as e:
+                st.error(f"Live fetch notice: {e}")
+                
     st.divider()
-    st.warning("Decision support only. Not financial advice.")
+    st.markdown("**Scope & Capabilities**")
+    st.markdown("- **Languages**: Sinhala, Tamil, English")
+    st.markdown("- **Sectors**: Food/Retail, Agriculture, Tourism, Energy, Manufacturing, Transport, Finance")
+    st.markdown("- **Districts**: Island-wide & localized (Kandy, Colombo, Galle, etc.)")
+    st.divider()
+    st.warning("⚠️ Decision support only. Not financial advice.")
 
 # ── Main UI ───────────────────────────────────────────────────────────────────
 st.title("LankaMarket Scout")
 st.subheader("Evidence-based market intelligence for small businesses")
 
 st.info(
-    "Ask about a business opportunity in Sri Lanka. "
-    "The agent will search recent local news in Sinhala, Tamil and English "
-    "and give you a structured report with sources and confidence levels.",
+    "Ask any business or market question about Sri Lanka in English, Sinhala, or Tamil. "
+    "The AI agent queries local news facts across native sources and synthesizes actionable recommendations.",
     icon="💡"
 )
 
 # Question input
 question = st.text_area(
     "Your question (Sinhala, Tamil or English):",
-    placeholder="Example: I want to open a small cafe in Kandy. Is it a good idea now?",
-    height=100,
+    placeholder="Example: I want to open a small bakery or restaurant in Kandy. What are the food prices and risks?",
+    height=90,
 )
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1, 1])
 with col1:
     submitted = st.button("🔍 Analyse", type="primary", use_container_width=True)
 with col2:
@@ -63,7 +70,7 @@ if clear:
 
 # ── Agent response ────────────────────────────────────────────────────────────
 if submitted and question.strip():
-    with st.spinner("Agent is researching... (this may take a moment)"):
+    with st.spinner("Agent is researching evidence & synthesizing recommendations..."):
         try:
             from agent.loop import run_agent
             report = run_agent(question)
@@ -77,17 +84,24 @@ if submitted and question.strip():
 
     # ── Report display ────────────────────────────────────────────────────────
     st.divider()
-    st.subheader("📋 Report")
+    st.subheader("📋 Market Intelligence Report")
 
     # Confidence badge
     conf = report.get("confidence", {})
     conf_label = conf.get("label", "Unknown")
     conf_color = {"High": "🟢", "Medium": "🟡", "Low": "🔴"}.get(conf_label, "⚪")
-    st.markdown(f"**Confidence:** {conf_color} {conf_label} — {conf.get('reason', '')}")
+    st.markdown(f"**Confidence:** {conf_color} **{conf_label}** — *{conf.get('reason', '')}*")
 
     # Summary
-    st.markdown("### Summary")
+    st.markdown("### Executive Summary")
     st.write(report.get("summary", "No summary available."))
+
+    # Strategic Recommendations (AI Generated)
+    recommendations = report.get("recommendations", [])
+    if recommendations:
+        st.markdown("### 💡 Strategic Recommendations")
+        for rec in recommendations:
+            st.markdown(f"- **{rec}**")
 
     # Opportunities and Risks side by side
     col_opp, col_risk = st.columns(2)
@@ -97,46 +111,48 @@ if submitted and question.strip():
         opps = report.get("opportunities", [])
         if opps:
             for o in opps:
-                src = o["source"]
                 st.markdown(f"- {o['point']}")
-                st.caption(f"  [{src['outlet']}]({src['link']}) — {src.get('published_at', '')}")
+                src = o.get("source")
+                if src and src.get("link"):
+                    st.caption(f"  [{src.get('outlet', 'Source')}]({src['link']}) — {src.get('published_at', '')}")
         else:
-            st.write("No positive signals found in recent news.")
+            st.write("No direct positive signals found in recent local news.")
 
     with col_risk:
-        st.markdown("### ⚠️ Risks")
+        st.markdown("### ⚠️ Key Risks")
         risks = report.get("risks", [])
         if risks:
             for r in risks:
-                src = r["source"]
                 st.markdown(f"- {r['point']}")
-                st.caption(f"  [{src['outlet']}]({src['link']}) — {src.get('published_at', '')}")
+                src = r.get("source")
+                if src and src.get("link"):
+                    st.caption(f"  [{src.get('outlet', 'Source')}]({src['link']}) — {src.get('published_at', '')}")
         else:
-            st.write("No negative signals found in recent news.")
+            st.write("No direct negative signals found in recent local news.")
 
     # Evidence list
-    with st.expander("📰 Evidence used (all sources)"):
+    with st.expander("📰 Ground Evidence Used (Cited Local Sources)"):
         evidence = report.get("evidence_list", [])
         if evidence:
             for e in evidence:
-                direction_icon = {"positive": "✅", "negative": "❌", "mixed": "🔀"}.get(e["direction"], "•")
+                direction_icon = {"positive": "✅", "negative": "❌", "mixed": "🔀"}.get(e.get("direction"), "•")
                 st.markdown(
                     f"{direction_icon} [{e['headline']}]({e['link']}) "
-                    f"— {e['outlet']} ({e['published']})"
+                    f"— *{e['outlet']}* ({e.get('published')})"
                 )
                 if e.get("summary"):
                     st.caption(f"  {e['summary']}")
         else:
-            st.write("No evidence items (database may be empty — run the collector first).")
+            st.write("No evidence items matched this specific query in the current database.")
 
     # What to check next
-    with st.expander("🔍 What to verify next (in person)"):
+    with st.expander("🔍 On-the-Ground Verification Checklist"):
         for item in report.get("check_next", []):
             st.markdown(f"- {item}")
 
     # Disclaimer — always visible
     st.divider()
-    st.error(report.get("disclaimer", ""))
+    st.caption(report.get("disclaimer", ""))
 
 elif submitted:
     st.warning("Please enter a question first.")
