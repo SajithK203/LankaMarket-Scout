@@ -22,7 +22,7 @@
 | write_report tool | ✅ Done | `agent/tools/report.py` — full structure; generates from evidence |
 | Streamlit interface | ✅ Done | `interface/app.py` — full UI with confidence badge, opportunities/risks, evidence links, disclaimer |
 | Evaluation label tool | ✅ Done | `evaluation/label_tool.py` — `--export`, `--label`, `--stats` modes; ready to export DB rows |
-| Hand-labelled Sinhala headlines | 🔄 In Progress | Initial set labelled in `data/labels/sinhala_labels.csv`; expandable as collector runs |
+| Hand-labelled Sinhala headlines | ✅ Done | 30 labelled in data/labels/sinhala_labels.csv (15 relevant, 15 irrelevant) |
 | Hand-labelled Tamil headlines | 🔄 In Progress | Initial set labelled in `data/labels/tamil_labels.csv`; expandable as collector runs |
 | Evaluation (precision/recall) | ✅ Done | `evaluation/evaluate.py` — computes Precision, Recall, F1, Confusion Matrix, and attribute accuracy |
 | User interviews | ✅ Done | 3-5 business owners interviewed before proposal submission |

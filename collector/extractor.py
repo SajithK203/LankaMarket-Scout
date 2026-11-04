@@ -229,11 +229,16 @@ def _heuristic_fallback(item: dict) -> dict:
 
     # Detect sectors
     sectors = set()
-    if any(k in text for k in ["agri", "paddy", "rice", "tea", "farming", "crop", "ගොවි", "තේ", "වී", "விவசாய", "தேயிலை"]):
+    if any(k in text for k in ["agri", "paddy", "rice", "tea", "farming", "crop", "ගොවි", "තේ", "වී වගා", " වී ", "விவசாய", "தேயிலை"]):
         sectors.add("agriculture")
     if any(k in text for k in ["fuel", "petrol", "diesel", "gas", "electricity", "ceb", "litro", "තෙල්", "ගෑස්", "විදුලි", "எரிபொருள்", "எரிவாயு", "மின்சாரம்"]):
         sectors.add("energy")
-    if any(k in text for k in ["food", "retail", "market", "palm oil", "පොල්", "වෙළෙඳ", "ආහාර", "உணவு", "சந்தை"]):
+    # Specific food & dining keywords (avoid bare "market" which triggers on bond/capital markets)
+    if any(k in text for k in ["food", "grocery", "bakery", "restaurant", "cafe", "bread", "wheat", "flour", "sugar", "egg", "meat", "chicken", "palm oil", "පොල්", "ආහාර", "බේකරි", "පාන්", "உணவு", "பேக்கரி", "ரொட்டி"]):
+        sectors.add("food_retail")
+    if any(k in text for k in ["factory", "manufactur", "rubber", "garment", "apparel", "textile", "industry", "industrial", "නිෂ්පාදන", "කර්මාන්ත", "රබර්", "உற்பத்தி", "தொழிற்சாலை", "இரப்பர்"]):
+        sectors.add("manufacturing")
+    if False:
         sectors.add("food_retail")
     if any(k in text for k in ["touris", "hotel", "travel", "සංචාරක", "சுற்றுலா"]):
         sectors.add("tourism")
