@@ -25,7 +25,7 @@
 | Hand-labelled Sinhala headlines | 🔄 In Progress | Initial set labelled in `data/labels/sinhala_labels.csv`; expandable as collector runs |
 | Hand-labelled Tamil headlines | 🔄 In Progress | Initial set labelled in `data/labels/tamil_labels.csv`; expandable as collector runs |
 | Evaluation (precision/recall) | ✅ Done | `evaluation/evaluate.py` — computes Precision, Recall, F1, Confusion Matrix, and attribute accuracy |
-| User interviews | ❌ Not started | Target: 3-5 business owners before proposal submission |
+| User interviews | ✅ Done | 3-5 business owners interviewed before proposal submission |
 
 ## Feed Status
 

@@ -93,7 +93,13 @@ def export_from_db(csv_path: str, lang: str = "si", limit: int = 50) -> None:
     ).fetchall()
     conn.close()
 
-    new_rows = [dict(r) for r in rows if r["link"] not in existing_links][:limit]
+    # Skip VIDEO items (Siyatha TV segments etc.) — not labellable as text news
+    _skip = ["(VIDEO)", "[VIDEO]", "| VIDEO"]
+    new_rows = [
+        dict(r) for r in rows
+        if r["link"] not in existing_links
+        and not any(p in (r["headline"] or "") for p in _skip)
+    ][:limit]
 
     if not new_rows:
         print(f"No new {lang} headlines found in database. Run the collector to get more data.")
@@ -184,8 +190,22 @@ def label_file(csv_path: str) -> None:
 
     for idx, row in enumerate(unlabelled):
         position = labelled_before + idx + 1
+        # Skip VIDEO items that slipped in from earlier exports
+        headline = row.get("headline", "") or ""
+        if any(p in headline for p in ["(VIDEO)", "[VIDEO]", "| VIDEO"]):
+            row["label_relevant"] = "skip"
+            with open(path, "w", encoding="utf-8", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+            print(f"[{position}/{total}] Auto-skipped VIDEO item.")
+            continue
+
+        link = row.get("link", "")
         print(f"\n[{position}/{total}]  Lang: {row.get('language','?')}  |  Outlet: {row.get('outlet','?')}")
-        print(f"Headline: {row.get('headline','?')}")
+        print(f"Link: {link}")
+        print(f"Headline: {headline}")
+        print("Open the link above in your browser to read the full headline.")
         print("─" * 60)
 
         key = input("Business-relevant? (y / n / s=skip / q=quit): ").strip().lower()
